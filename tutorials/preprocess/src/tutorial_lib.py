@@ -229,7 +229,9 @@ def read_lexicon(path):
 
 # ----------------------------------------------------------------- figures
 
-FIGURES = ROOT / "docs" / "figures"
+# Figures drawn by run.sh (not tracked by git; docs/figures keeps the copies
+# used in the guides)
+FIGURES = ROOT / "figures"
 # Fixed log-mel color range for all figures; floor ln(1e-5) = -11.5
 MEL_RANGE = (-11.5, 2.0)
 

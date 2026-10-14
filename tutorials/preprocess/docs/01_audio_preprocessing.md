@@ -199,4 +199,4 @@ Run the commands from the repository folder. See the [README](../README.md) for 
 - `python src/step1_audio.py` runs all the steps above. It prints the result of each step (trimmed parts, level and gain) and saves the output audio to `../data/preprocess/example_dataset_16k/audio/` (same folder layout as the input) and a log to `audio_log.csv`. It also fills `audio`, `sampling_rate` and `duration` in the output manifest.
 - The functions live in `src/tutorial_lib.py` (`highpass`, `vad_trim_bounds`, `active_speech_level`).
 - To change the parameters, edit `audio.*` in `config.yaml`.
-- To redraw the figures, run `python src/plot_audio.py` (waveform and mel after each step, VAD probability → `docs/figures/`).
+- To redraw the figures, run `python src/plot_audio.py` (waveform and mel after each step, VAD probability → `figures/`).

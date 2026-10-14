@@ -130,8 +130,10 @@ Written with the same folder layout as the input.
     ├── oovs/, oov.dict                  OOV list and G2P pronunciations
     ├── dictionary.txt                   lexicon used for alignment
     └── *.log                            MFA logs
-docs/figures/                            figures (file names use the id with "/" replaced by "_": 0001_example_0001_*.png)
+figures/                                 figures drawn by run.sh (file names use the id with "/" replaced by "_": 0001_example_0001_*.png)
 ```
+
+`figures/` is not tracked by git; the figures shown in the guides are kept in `docs/figures/`.
 
 ## Code style
 
