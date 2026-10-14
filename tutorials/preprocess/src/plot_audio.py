@@ -1,4 +1,4 @@
-"""Figures for guide 01 (docs/01_audio_preprocessing.md), saved in docs/figures/.
+"""Figures for guide 01 (docs/01_audio_preprocessing.md), saved in figures/.
 
 "/" in the id is replaced by "_" in the file names.
 

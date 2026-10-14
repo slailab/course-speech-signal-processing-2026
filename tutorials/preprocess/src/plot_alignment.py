@@ -1,4 +1,4 @@
-"""Figure for guide 03 (docs/03_alignment.md), saved as docs/figures/align_<id>.png.
+"""Figure for guide 03 (docs/03_alignment.md), saved as figures/align_<id>.png.
 
 Waveform + log-mel of the aligned (preprocessed) audio with the MFA word and
 phone intervals underneath. "/" in the id is replaced by "_" in the file name.
@@ -112,7 +112,7 @@ def main():
         ax_ph.set_xlim(0, dur)
         fig.savefig(OUT / f"align_{name}.png", dpi=200, bbox_inches="tight")
         plt.close(fig)
-        print(f"docs/figures/align_{name}.png")
+        print(f"figures/align_{name}.png")
 
 
 if __name__ == "__main__":

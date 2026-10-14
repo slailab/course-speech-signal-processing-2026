@@ -1,2 +1,5 @@
 # installed by setup.sh
 third_party/
+
+# figures drawn by run.sh (docs/figures keeps the copies used in the guides)
+figures/
