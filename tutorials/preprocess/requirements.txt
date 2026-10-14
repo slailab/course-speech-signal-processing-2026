@@ -1,0 +1,18 @@
+# Python packages for the tutorial, tested with Python 3.11.
+#
+# Pre-installed on Google Colab: only the major version is fixed, so that Colab
+# keeps its own builds (tested versions in the comments). PyTorch is needed by
+# silero-vad.
+numpy>=2,<3           # tested: 2.4.6
+scipy>=1,<2           # tested: 1.17.1
+matplotlib>=3,<4      # tested: 3.11.2
+torch>=2,<3           # tested: 2.14.1
+# Tutorial-specific: exact versions
+librosa==0.11.0
+soxr==1.1.0
+soundfile==0.14.0
+silero-vad==6.2.3
+tgt==1.5
+inflect==7.5.0
+unidecode==1.4.0
+pyyaml==6.0.3

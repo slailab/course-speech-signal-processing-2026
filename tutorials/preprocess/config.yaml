@@ -1,0 +1,37 @@
+# Tutorial settings. Relative paths are resolved against this folder.
+# Data lives in ../data, shared by all tutorials: raw/ (given, never modified)
+# and preprocess/ (outputs). Name the output folder after the settings (e.g. the
+# sampling rate) so that tutorials with different settings do not overwrite it.
+paths:
+  manifest: ../data/raw/example_dataset_16k/manifest.jsonl   # one utterance per line
+  work: ../data/preprocess/example_dataset_16k               # outputs (same layout as the input) + output manifest.jsonl
+  third_party: third_party                                   # fetched by setup.sh
+
+audio:
+  target_sr: 16000                       # every input is resampled to this rate
+  format: flac                           # output files: flac | wav (16-bit PCM)
+  hpf:                                   # DC / low-frequency removal
+    order: 4
+    cutoff_hz: 70
+  trim: vad                              # none | vad
+  vad:                                   # silero-vad
+    threshold: 0.5
+    margin_ms: 20
+    zero_pad_s: 1.0
+  level:                                 # ITU-T P.56 active speech level
+    target_dbov: -26.0
+
+text:
+  lexicon: third_party/FastSpeech2/lexicon/librispeech-lexicon.txt   # pronunciation lexicon (ARPAbet)
+
+mfa:
+  acoustic_model: english_us_arpa        # phone set must match the lexicon
+  g2p_model: english_us_arpa             # pronunciations for OOV words
+
+mel:                                     # log-mel for the figures: 25 ms window, 10 ms hop
+  n_fft: 512
+  num_mels: 80
+  hop_size: 160
+  win_size: 400
+  fmin: 0
+  fmax: null                             # = target_sr / 2

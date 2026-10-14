@@ -1,0 +1,22 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E4", "E7", "E9", "F",  # default rules
+    "E501",                 # line length (also comments and docstrings)
+    "W", "I", "N", "UP", "B", "A", "COM", "C4", "EXE", "FA", "ISC", "PIE", "Q", "RSE", "RET", "SIM",
+    "ARG", "PTH", "FLY", "NPY", "PERF",
+    "RUF00", "RUF01", "RUF10", "RUF20",  # ruff-specific rules
+]
+ignore = [
+    "E731", "N812", "RET504", "RUF009", "PTH123", "PERF401", "PERF203",
+    "ISC001", "COM812",  # conflict with the formatter
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true  # keep "from x import (A as B, C)" in one statement
+
+[tool.ruff.format]
+quote-style = "double"

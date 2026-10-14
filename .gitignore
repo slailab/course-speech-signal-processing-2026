@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# outputs of the tutorials (tutorials/data/raw holds the example data and is tracked)
+tutorials/data/preprocess/
