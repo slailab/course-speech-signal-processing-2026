@@ -142,6 +142,9 @@ def vad_figure(cfg, vad, utt_id, y, sr):
 
 def main():
     cfg = load_config()
+    if not cfg["report"]["figures"]:
+        print(f"report.figures is off in config {cfg['name']}: no figures")
+        return
     OUT.mkdir(exist_ok=True)
     sr = cfg["audio"]["target_sr"]
     vad = load_vad() if cfg["audio"]["trim"] == "vad" else None

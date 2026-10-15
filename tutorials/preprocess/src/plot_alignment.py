@@ -56,6 +56,9 @@ def draw_tier(ax, intervals, label, stagger=False):
 
 def main():
     cfg = load_config()
+    if not cfg["report"]["figures"]:
+        print(f"report.figures is off in config {cfg['name']}: no figures")
+        return
     work, m, root = cfg["paths"]["work"], cfg["mel"], audio_root(cfg)
     OUT.mkdir(exist_ok=True)
     for entry in read_manifest(output_manifest(cfg)):

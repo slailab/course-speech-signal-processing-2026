@@ -15,8 +15,10 @@ import numpy as np
 import yaml
 from scipy import signal
 
-# Repository root: config.yaml, data/, docs/
+# Tutorial root: configs/, docs/, src/, third_party/
 ROOT = Path(__file__).resolve().parent.parent
+# Config used when the environment variable CONFIG is not set
+DEFAULT_CONFIG = "configs/example_dataset_16k.yaml"
 # Full scale of a 16-bit file in [-1, 1) float
 INT16_MAX = 32767 / 32768
 # silero-vad accepts 8 or 16 kHz input only
@@ -26,14 +28,29 @@ VAD_SR = 16000
 # ----------------------------------------------------------------- config / corpus
 
 
-def load_config(path=ROOT / "config.yaml"):
+def config_path():
+    """The config file: $CONFIG (relative to the tutorial root or absolute) or the default."""
+    return (ROOT / os.environ.get("CONFIG", DEFAULT_CONFIG)).resolve()
+
+
+def load_config(path=None):
+    """Read the config; paths in it are resolved relative to the tutorial root.
+
+    Optional keys get their defaults: report.verbose / report.figures = False,
+    jobs = number of CPUs, text.lexicon_extra = None.
+    """
+    path = path or config_path()
     with open(path, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
+    cfg["name"] = Path(path).stem
     for key in ("manifest", "work", "third_party"):
         cfg["paths"][key] = (ROOT / cfg["paths"][key]).resolve()
     for key in ("lexicon", "lexicon_extra"):
         if cfg["text"].get(key):  # lexicon_extra is optional
             cfg["text"][key] = (ROOT / cfg["text"][key]).resolve()
+    report = cfg.get("report") or {}
+    cfg["report"] = {k: bool(report.get(k, False)) for k in ("verbose", "figures")}
+    cfg["jobs"] = cfg.get("jobs") or os.cpu_count()
     return cfg
 
 
@@ -262,6 +279,15 @@ def log_mel(y, sr, m):
         sr=sr, n_fft=m["n_fft"], n_mels=m["num_mels"], fmin=m["fmin"], fmax=m["fmax"]
     )
     return np.log(np.maximum(basis @ spec, 1e-5)).T
+
+
+# ----------------------------------------------------------------- progress
+
+
+def print_progress(done, total, every=1000):
+    """Progress line for quiet runs: every `every` utterances and at the end."""
+    if done % every == 0 or done == total:
+        print(f"  {done} / {total}", flush=True)
 
 
 # python src/tutorial_lib.py <dotted.key>  -> prints a config value

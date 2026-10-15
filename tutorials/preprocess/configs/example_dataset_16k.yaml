@@ -1,7 +1,10 @@
-# Tutorial settings. Relative paths are resolved against this folder.
+# Preprocess config for the example data (the default config).
+# Select another config with CONFIG=configs/<name>.yaml. Relative paths are resolved
+# against the tutorial folder (tutorials/preprocess).
 # Data lives in ../data, shared by all tutorials: raw/ (given, never modified)
-# and preprocess/ (outputs). Name the output folder after the settings (e.g. the
-# sampling rate) so that tutorials with different settings do not overwrite it.
+# and preprocess/ (outputs). Name the config and the output folder after the dataset
+# and the settings (e.g. the sampling rate), so that different settings do not
+# overwrite each other.
 paths:
   manifest: ../data/raw/example_dataset_16k/manifest.jsonl   # one utterance per line
   work: ../data/preprocess/example_dataset_16k               # outputs (same layout as the input) + output manifest.jsonl
@@ -39,3 +42,9 @@ mel:                                     # log-mel for the figures: 25 ms window
   win_size: 400
   fmin: 0
   fmax: null                             # = target_sr / 2
+
+report:                                  # both default to false
+  verbose: true                          # print every step for every utterance
+  figures: true                          # figures for every utterance (run.sh step 4)
+
+jobs: null                               # parallel processes; null = number of CPUs

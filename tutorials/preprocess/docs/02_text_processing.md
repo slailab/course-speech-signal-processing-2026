@@ -16,7 +16,7 @@ We read the raw text (transcript) from the dataset's manifest (`text_info.text`)
 ```python
 from tutorial_lib import load_config, load_corpus
 
-cfg = load_config()  # config.yaml
+cfg = load_config()  # configs/example_dataset_16k.yaml, or $CONFIG
 for utt_id, (audio_path, text) in load_corpus(cfg).items():
     print(utt_id, text)
 ```
@@ -157,10 +157,10 @@ Words that are not in the lexicon are called OOV (out-of-vocabulary) words. For 
 
 ### Code
 
-We use the MFA G2P model (`mfa.g2p_model` in `config.yaml`; see Appendices B and D).
+We use the MFA G2P model (`mfa.g2p_model` in the config; see Appendices B and D).
 
 ```bash
-# CORPUS: folder of audio and .lab files, LEXICON: pronunciation lexicon, G2P_MODEL: mfa.g2p_model in config.yaml
+# CORPUS: folder of audio and .lab files, LEXICON: pronunciation lexicon, G2P_MODEL: mfa.g2p_model in the config
 mfa find_oovs "$CORPUS" "$LEXICON" "$OOV_DIR"                                 # find OOV words
 mfa g2p "$OOV_DIR/oovs_found_lexicon.txt" "$G2P_MODEL" "$OOV_DICT"            # generate OOV pronunciations
 cat "$LEXICON" "$OOV_DICT" > "$DICTIONARY"                                    # merge into the lexicon
@@ -244,12 +244,12 @@ The example outputs below are for `0001/example_0001`.
 
 ## Running it yourself
 
-Run the commands from the repository folder. See the [README](../README.md) for installation.
+Run the commands from this tutorial's folder (`tutorials/preprocess`). They use the default config, `configs/example_dataset_16k.yaml`; see the [README](../README.md) for installation and for other configs (e.g. LJSpeech).
 
 - `python src/process_text.py` runs steps 0-3. It prints the result of each TN sub-step and the lexicon lookup of each word, and saves `../data/preprocess/example_dataset_16k/audio/<id>.lab` (next to the audio file) and `mfa/lexicon.txt`. It also fills `text_info.normalized_text` in the output manifest.
 - Steps 4-5 are run by `bash src/align.sh` (Tutorial 3), which also fills `text_info.phonemes` in the output manifest.
 - The functions live in `src/tutorial_lib.py` (`load_corpus`, `mfa_safe`, `read_lexicon`).
-- To change the raw text, edit `text_info.text` in the dataset manifest; to change the lexicon, edit `text.lexicon` in `config.yaml`; to add or fix pronunciations, use `text.lexicon_extra` (Appendix D).
+- To change the raw text, edit `text_info.text` in the dataset manifest; to change the lexicon, edit `text.lexicon` in the config; to add or fix pronunciations, use `text.lexicon_extra` (Appendix D).
 
 ---
 
@@ -308,7 +308,7 @@ Run the commands from the repository folder. See the [README](../README.md) for 
 3. Find the path that best matches the audio with the GMM-HMM acoustic model (Viterbi alignment). This step decides the pronunciations and whether there are pauses.
 4. Adapt to the speaker (fMLLR) and align once more.
 
-**Models and version used** (`mfa.*` in `config.yaml`)
+**Models and version used** (`mfa.*` in the config)
 
 - Acoustic model: `english_us_arpa` (trained on about 982 hours of LibriSpeech from 2,484 speakers; ARPAbet + stress)
 - G2P model: `english_us_arpa` (based on Pynini/WFST)
@@ -383,7 +383,7 @@ A G2P model that only looks at the spelling cannot handle acronyms or the odd sp
 
 A practical approach is to sort the OOV list by number of occurrences (`mfa/oovs/oov_counts_*.txt`) and check the G2P results from the top. In LJSpeech, 30% of all OOV occurrences came from just 9 words (misess, fbi, prs, fpcc, ussr, ...), so adding only those 9 words to the lexicon made a large difference.
 
-To add words to the lexicon in this tutorial, write them to a text file (`word<TAB>phones` per line, `#` for comments) and set `text.lexicon_extra` in `config.yaml` to its path. `process_text.py` merges the file into the lexicon; a word listed there replaces all of its entries in librispeech-lexicon.
+To add words to the lexicon in this tutorial, write them to a text file (`word<TAB>phones` per line, `#` for comments) and set `text.lexicon_extra` in the config to its path. `process_text.py` merges the file into the lexicon; a word listed there replaces all of its entries in librispeech-lexicon.
 
 ```
 # extra pronunciations

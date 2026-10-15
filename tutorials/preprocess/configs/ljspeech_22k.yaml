@@ -1,0 +1,47 @@
+# Preprocess config for LJSpeech 1.1 at 22.05 kHz (e.g. for a BigVGAN 22 kHz vocoder).
+# Get the data first: bash ../data/datasets/ljspeech/download.sh
+# Run: CONFIG=configs/ljspeech_22k.yaml bash run.sh
+# Relative paths are resolved against the tutorial folder (tutorials/preprocess).
+paths:
+  manifest: ../data/raw/LJSpeech-1.1/manifest.jsonl
+  work: ../data/preprocess/ljspeech_22k
+  third_party: third_party
+
+audio:
+  target_sr: 22050                       # the original rate of LJSpeech
+  format: flac
+  hpf:
+    order: 4
+    cutoff_hz: 70
+  # LJSpeech is already trimmed; silero-vad also cut the first syllable of some
+  # utterances, so no VAD trim here
+  trim: none
+  vad:
+    threshold: 0.5
+    margin_ms: 20
+    zero_pad_s: 1.0
+  level:
+    target_dbov: -26.0
+
+text:
+  lexicon: third_party/FastSpeech2/lexicon/librispeech-lexicon.txt
+  # Fixes for LJSpeech OOV words that G2P gets wrong (misess, fbi, ...)
+  lexicon_extra: ../data/datasets/ljspeech/lexicon_extra.txt
+
+mfa:
+  acoustic_model: english_us_arpa
+  g2p_model: english_us_arpa
+
+mel:                                     # log-mel for the figures (BigVGAN 22 kHz settings)
+  n_fft: 1024
+  num_mels: 80
+  hop_size: 256
+  win_size: 1024
+  fmin: 0
+  fmax: null
+
+report:                                  # 13,100 utterances: progress and summary only
+  verbose: false
+  figures: false
+
+jobs: null                               # parallel processes; null = number of CPUs

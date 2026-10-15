@@ -10,7 +10,7 @@ Run, step by step, the process that turns example speech samples into TTS traini
 
 ## Data
 
-Data is kept in `tutorials/data/`, shared by all tutorials of the course: `raw/` holds the given data and `preprocess/` the outputs. The paths are set in `config.yaml` (`paths.manifest`, `paths.work`). Other datasets (e.g. LJSpeech) and the manifest format are described in [tutorials/data/README.md](../data/README.md).
+Data is kept in `tutorials/data/`, shared by all tutorials of the course: `raw/` holds the given data and `preprocess/` the outputs. The paths are set in the config (`paths.manifest`, `paths.work`; see "Configs" below). Other datasets (e.g. LJSpeech) and the manifest format are described in [tutorials/data/README.md](../data/README.md).
 
 ```
 ../data/raw/example_dataset_16k/
@@ -39,7 +39,7 @@ One line of `manifest.jsonl` (wrapped for readability):
 
 | Step | Fields filled |
 |---|---|
-| 1 | `audio` (preprocessed audio, format set by `audio.format` in `config.yaml`), `sampling_rate`, `duration` |
+| 1 | `audio` (preprocessed audio, format set by `audio.format` in the config), `sampling_rate`, `duration` |
 | 2 | `text_info.normalized_text` |
 | 3 | `textgrid`, `text_info.phonemes` (aligned phone sequence, words separated by `\|`, silence as `sil`) |
 
@@ -102,7 +102,24 @@ python src/plot_audio.py         # figures: waveform and mel after each audio st
 python src/plot_alignment.py     # figures: word and phone intervals over the waveform and mel
 ```
 
-Parameters (data paths, sampling rate, filter, VAD, target level, lexicon and extra pronunciations, MFA models) are set in `config.yaml`.
+### Configs
+
+Parameters (data paths, sampling rate, filter, VAD, target level, lexicon and extra pronunciations, MFA models, output, parallel jobs) are set in a config in `configs/`. A config is named after the dataset and the settings, and its output folder in `../data/preprocess/` has the same name.
+
+| Config | Data | Settings | Output |
+|---|---|---|---|
+| `example_dataset_16k.yaml` (default) | the 2 example utterances | 16 kHz, VAD trim | every step printed for every utterance, figures |
+| `ljspeech_22k.yaml` | LJSpeech 1.1 ([get it first](../data/README.md)) | 22.05 kHz, no VAD trim (LJSpeech is already trimmed), extra pronunciations | progress and summary only, no figures |
+
+Select a config with the environment variable `CONFIG` (path relative to this folder); every script and `run.sh` read it:
+
+```bash
+CONFIG=configs/ljspeech_22k.yaml bash run.sh
+```
+
+- `report.verbose`: print the result of every step for every utterance (default: off; only progress and a summary).
+- `report.figures`: draw the figures of every utterance in step 4 (default: off).
+- `jobs`: number of parallel processes for the audio and text steps and for MFA (default: number of CPUs).
 
 **On Colab:** prefix commands with `!` in a cell (use `%cd` instead of `cd`), and listen to the audio like this:
 
@@ -143,7 +160,7 @@ Only needed if you change the code: see "Code style" in the [course README](../.
 
 ```
 ├── README.md
-├── config.yaml          paths and parameters
+├── configs/             one config per dataset and settings (paths and parameters)
 ├── requirements.txt     Python packages for the tutorial
 ├── setup.sh             installation
 ├── run.sh               run everything

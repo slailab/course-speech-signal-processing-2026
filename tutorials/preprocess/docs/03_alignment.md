@@ -55,7 +55,7 @@ The phone notation of the lexicon must match the phone set of the acoustic model
 The acoustic model decides which phone a stretch of speech sounds like. We download a pretrained one:
 
 ```bash
-# ACOUSTIC_MODEL: mfa.acoustic_model in config.yaml (english_us_arpa: trained on 982 hours of LibriSpeech, ARPAbet)
+# ACOUSTIC_MODEL: mfa.acoustic_model in the config (english_us_arpa: trained on 982 hours of LibriSpeech, ARPAbet)
 mfa model download acoustic "$ACOUSTIC_MODEL"
 ```
 
@@ -209,9 +209,9 @@ Each figure shows, from top to bottom, the waveform, the mel-spectrogram, the wo
 
 ## Running it yourself
 
-Run the commands from the repository folder. See the [README](../README.md) for installation.
+Run the commands from this tutorial's folder (`tutorials/preprocess`). They use the default config, `configs/example_dataset_16k.yaml`; see the [README](../README.md) for installation and for other configs (e.g. LJSpeech).
 
 - `bash src/align.sh` finds the OOV words, runs G2P and aligns, all in one go. It prints the OOV words with their G2P pronunciations and saves the results to `../data/preprocess/example_dataset_16k/textgrids/`. At the end it fills `textgrid` (the path) and `text_info.phonemes` (the aligned phone sequence, with words separated by `|` and silences as `sil`) in the output manifest.
 - `python src/show_alignment.py` prints each TextGrid as a word/phone table.
-- To change the acoustic or G2P model, edit `mfa.*` in `config.yaml`.
+- To change the acoustic or G2P model, edit `mfa.*` in the config.
 - To redraw the figures, run `python src/plot_alignment.py` (→ `figures/align_<id>.png`, with "/" in the id replaced by "_").
