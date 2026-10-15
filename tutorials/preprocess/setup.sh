@@ -6,7 +6,7 @@
 #   4. Montreal Forced Aligner (tested version $MFA_VERSION) + English models
 #                                                  -> micromamba env "mfa" (~/.local/bin/micromamba)
 # Usage: bash setup.sh [START] [END]   (default 1 4; e.g. "bash setup.sh 4" installs MFA only)
-# Steps 2-4 read config.yaml and so need step 1 (pyyaml) to have run once.
+# Steps 2-4 read the config and so need step 1 (pyyaml) to have run once.
 set -euo pipefail
 cd "$(dirname "$(realpath "$0")")"
 MFA_VERSION=${MFA_VERSION:-3.4.3}
@@ -29,7 +29,7 @@ if step 1; then
   fi
 fi
 if [ "$END" -ge 2 ]; then
-  TP=$("$PYTHON" src/tutorial_lib.py paths.third_party)   # from config.yaml (needs pyyaml from step 1)
+  TP=$("$PYTHON" src/tutorial_lib.py paths.third_party)   # from the config (needs pyyaml from step 1)
   mkdir -p "$TP/bin"
 fi
 

@@ -9,13 +9,13 @@ Before speech recordings can be used to train a TTS model, the audio itself need
 
 ## 0. Reading the audio
 
-We read audio with [`soundfile`](https://github.com/bastibe/python-soundfile), which returns a float signal in the range -1 to 1. File paths are never written in the code; instead, we take the list of utterances from the dataset's manifest (`paths.manifest` in `config.yaml`) through `tutorial_lib.load_corpus`. See "Data" in the README for the manifest format.
+We read audio with [`soundfile`](https://github.com/bastibe/python-soundfile), which returns a float signal in the range -1 to 1. File paths are never written in the code; instead, we take the list of utterances from the dataset's manifest (`paths.manifest` in the config) through `tutorial_lib.load_corpus`. See "Data" in the README for the manifest format.
 
 ```python
 import soundfile as sf
 from tutorial_lib import load_config, load_corpus
 
-cfg = load_config()  # config.yaml
+cfg = load_config()  # configs/example_dataset_16k.yaml, or $CONFIG
 for utt_id, (audio_path, text) in load_corpus(cfg).items():
     y, sr = sf.read(audio_path)  # float64, [-1, 1)
 ```
@@ -38,7 +38,7 @@ We use a 4th-order Butterworth high-pass filter at 70 Hz from [`scipy.signal`](h
 ```python
 from scipy import signal
 
-hpf = cfg["audio"]["hpf"]  # config.yaml: order 4, cutoff_hz 70
+hpf = cfg["audio"]["hpf"]  # config: order 4, cutoff_hz 70
 sos = signal.butter(hpf["order"], hpf["cutoff_hz"], btype="highpass", fs=sr, output="sos")
 y = signal.sosfiltfilt(sos, y)
 ```
@@ -72,7 +72,7 @@ from scipy import signal
 from silero_vad import load_silero_vad, get_speech_timestamps
 
 model = load_silero_vad()
-v = cfg["audio"]["vad"]  # config.yaml: threshold 0.5, margin_ms 20, zero_pad_s 1.0
+v = cfg["audio"]["vad"]  # config: threshold 0.5, margin_ms 20, zero_pad_s 1.0
 
 vad_sr = 16000  # silero-vad accepts 8/16 kHz input only
 y16 = signal.resample_poly(y, vad_sr, sr) if sr != vad_sr else y
@@ -149,13 +149,13 @@ def active_speech_level(y, sr, actlev):
 
 
 actlev = cfg["paths"]["third_party"] / "bin" / "actlev"  # built by setup.sh
-target_dbov = cfg["audio"]["level"]["target_dbov"]  # config.yaml: -26.0
+target_dbov = cfg["audio"]["level"]["target_dbov"]  # config: -26.0
 level = active_speech_level(y, sr, actlev)  # e.g. -25.5 dBov
 gain_db = target_dbov - level  # e.g. -0.5 dB
 y = y * 10 ** (gain_db / 20)
 if np.abs(y).max() > 32767 / 32768:  # if saving as 16-bit would clip,
     ...  # we drop this utterance from the training data
-fmt = cfg["audio"]["format"]  # config.yaml: flac
+fmt = cfg["audio"]["format"]  # config: flac
 out_path = cfg["paths"]["work"] / "audio" / f"{utt_id}.{fmt}"  # same folder layout as the input
 sf.write(out_path, y, sr, subtype="PCM_16")
 ```
@@ -194,9 +194,9 @@ After:
 
 ## Running it yourself
 
-Run the commands from the repository folder. See the [README](../README.md) for installation.
+Run the commands from this tutorial's folder (`tutorials/preprocess`). They use the default config, `configs/example_dataset_16k.yaml`; see the [README](../README.md) for installation and for other configs (e.g. LJSpeech).
 
 - `python src/process_audio.py` runs all the steps above. It prints the result of each step (trimmed parts, level and gain) and saves the output audio to `../data/preprocess/example_dataset_16k/audio/` (same folder layout as the input) and a log to `audio_log.csv`. It also fills `audio`, `sampling_rate` and `duration` in the output manifest.
 - The functions live in `src/tutorial_lib.py` (`highpass`, `vad_trim_bounds`, `active_speech_level`).
-- To change the parameters, edit `audio.*` in `config.yaml`.
+- To change the parameters, edit `audio.*` in the config.
 - To redraw the figures, run `python src/plot_audio.py` (waveform and mel after each step, VAD probability → `figures/`).

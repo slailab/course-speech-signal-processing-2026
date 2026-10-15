@@ -10,6 +10,9 @@ from tutorial_lib import audio_root, load_config, output_manifest, read_manifest
 
 def main():
     cfg = load_config()
+    if not cfg["report"]["verbose"]:
+        print(f"report.verbose is off in config {cfg['name']}: no alignment tables")
+        return
     work, root = cfg["paths"]["work"], audio_root(cfg)
     for entry in read_manifest(output_manifest(cfg)):
         if not entry.get("textgrid"):
