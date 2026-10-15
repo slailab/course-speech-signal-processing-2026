@@ -264,7 +264,7 @@ def log_mel(y, sr, m):
 
 # python src/tutorial_lib.py <dotted.key>  -> prints a config value
 if __name__ == "__main__":
-    # Output audio folder = MFA corpus (used by step3_align.sh)
+    # Output audio folder = MFA corpus (used by align.sh)
     if sys.argv[1] == "corpus_dir":
         cfg = load_config()
         print(cfg["paths"]["work"] / audio_root(cfg))

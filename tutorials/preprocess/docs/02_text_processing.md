@@ -246,8 +246,8 @@ The example outputs below are for `0001/example_0001`.
 
 Run the commands from the repository folder. See the [README](../README.md) for installation.
 
-- `python src/step2_text.py` runs steps 0-3. It prints the result of each TN sub-step and the lexicon lookup of each word, and saves `../data/preprocess/example_dataset_16k/audio/<id>.lab` (next to the audio file) and `mfa/lexicon.txt`. It also fills `text_info.normalized_text` in the output manifest.
-- Steps 4-5 are run by `bash src/step3_align.sh` (Tutorial 3), which also fills `text_info.phonemes` in the output manifest.
+- `python src/process_text.py` runs steps 0-3. It prints the result of each TN sub-step and the lexicon lookup of each word, and saves `../data/preprocess/example_dataset_16k/audio/<id>.lab` (next to the audio file) and `mfa/lexicon.txt`. It also fills `text_info.normalized_text` in the output manifest.
+- Steps 4-5 are run by `bash src/align.sh` (Tutorial 3), which also fills `text_info.phonemes` in the output manifest.
 - The functions live in `src/tutorial_lib.py` (`load_corpus`, `mfa_safe`, `read_lexicon`).
 - To change the raw text, edit `text_info.text` in the dataset manifest; to change the lexicon, edit `text.lexicon` in `config.yaml`.
 
@@ -348,7 +348,7 @@ Other English lexicons work as well:
 
 ## Appendix D. Handling OOV words
 
-### Processing order (`src/step3_align.sh`)
+### Processing order (`src/align.sh`)
 
 1. **Find:** `mfa find_oovs` lists the words that are not in the lexicon.
 2. **Generate:** `mfa g2p` generates pronunciation candidates for each OOV word.

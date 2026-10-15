@@ -11,7 +11,7 @@ if ! [[ "$START" =~ ^[1-4]$ && "$END" =~ ^[1-4]$ ]] || [ "$START" -gt "$END" ]; 
 fi
 step() { [ "$1" -ge "$START" ] && [ "$1" -le "$END" ]; }
 
-if step 1; then echo "########## Step 1. Audio preprocessing";   "$PYTHON" src/step1_audio.py; fi
-if step 2; then echo "########## Step 2. Text processing";       "$PYTHON" src/step2_text.py; fi
-if step 3; then echo "########## Step 3. Forced alignment (MFA)"; bash src/step3_align.sh; "$PYTHON" src/show_alignment.py; fi
+if step 1; then echo "########## Step 1. Audio preprocessing";   "$PYTHON" src/process_audio.py; fi
+if step 2; then echo "########## Step 2. Text processing";       "$PYTHON" src/process_text.py; fi
+if step 3; then echo "########## Step 3. Forced alignment (MFA)"; bash src/align.sh; "$PYTHON" src/show_alignment.py; fi
 if step 4; then echo "########## Step 4. Figures";               "$PYTHON" src/plot_audio.py; "$PYTHON" src/plot_alignment.py; fi
