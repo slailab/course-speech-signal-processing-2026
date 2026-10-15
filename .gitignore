@@ -1,6 +1,9 @@
 __pycache__/
 *.pyc
 .ruff_cache/
+# Python virtual environments (uv venvs ignore themselves; others do not)
+venv/
+.venv/
 
 # outputs of the tutorials
 tutorials/data/preprocess/
