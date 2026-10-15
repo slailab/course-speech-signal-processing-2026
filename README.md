@@ -11,12 +11,14 @@ tutorials/
 ├── data/
 │   ├── raw/          given data (e.g. raw/example_dataset_16k/)
 │   └── preprocess/   outputs of the tutorials (not tracked by git)
-└── preprocess/
+├── preprocess/
+└── spss/
 ```
 
 | Tutorial | Content |
 |---|---|
 | [preprocess](tutorials/preprocess/) | Preparing TTS training data: audio preprocessing, text processing, forced alignment |
+| [spss](tutorials/spss/) | Statistical parametric speech synthesis with DNNs (work in progress) |
 
 More tutorials will be added during the semester.
 
