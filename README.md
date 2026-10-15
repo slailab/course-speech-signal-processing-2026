@@ -8,8 +8,9 @@ Each tutorial has its own README, setup script and requirements, and shares no c
 
 ```
 tutorials/
-├── data/
-│   ├── raw/          given data (e.g. raw/example_dataset_16k/)
+├── data/             see tutorials/data/README.md (datasets, manifest format)
+│   ├── datasets/     download and manifest scripts per dataset
+│   ├── raw/          given data (raw/example_dataset_16k/ is included; others are downloaded)
 │   └── preprocess/   outputs of the tutorials (not tracked by git)
 ├── preprocess/
 └── spss/

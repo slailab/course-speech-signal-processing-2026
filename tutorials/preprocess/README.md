@@ -10,7 +10,7 @@ Run, step by step, the process that turns example speech samples into TTS traini
 
 ## Data
 
-Data is kept in `tutorials/data/`, shared by all tutorials of the course: `raw/` holds the given data and `preprocess/` the outputs. The paths are set in `config.yaml` (`paths.manifest`, `paths.work`).
+Data is kept in `tutorials/data/`, shared by all tutorials of the course: `raw/` holds the given data and `preprocess/` the outputs. The paths are set in `config.yaml` (`paths.manifest`, `paths.work`). Other datasets (e.g. LJSpeech) and the manifest format are described in [tutorials/data/README.md](../data/README.md).
 
 ```
 ../data/raw/example_dataset_16k/

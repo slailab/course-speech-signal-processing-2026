@@ -2,5 +2,8 @@ __pycache__/
 *.pyc
 .ruff_cache/
 
-# outputs of the tutorials (tutorials/data/raw holds the example data and is tracked)
+# outputs of the tutorials
 tutorials/data/preprocess/
+# downloaded datasets; only the example data in tutorials/data/raw is tracked
+tutorials/data/raw/*
+!tutorials/data/raw/example_dataset_16k/
