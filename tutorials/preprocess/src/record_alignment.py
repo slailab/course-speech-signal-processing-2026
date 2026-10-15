@@ -1,10 +1,10 @@
-"""Step 3 (end). Add the alignment to the manifest.
+"""Record the alignment in the manifest (last part of align.sh).
 
 Fills textgrid (path) and text_info.phonemes: the aligned phones, words
 separated by " | " and pauses written as "sil",
 e.g. "S EH1 D | M IH1 S T ER0 | sil | ER1 W AH0 N | ...".
-Called by step3_align.sh.
-Usage: python src/step3_manifest.py
+Called by align.sh.
+Usage: python src/record_alignment.py
 """
 
 import tgt

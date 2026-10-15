@@ -1,4 +1,4 @@
-"""Step 1. Audio preprocessing (guide: docs/01_audio_preprocessing.md).
+"""Audio preprocessing (guide: docs/01_audio_preprocessing.md).
 
 read -> resample -> high-pass (DC removal) -> VAD trim -> P.56 level.
 
@@ -10,7 +10,7 @@ layout as the input:
       the given fields + audio, sampling_rate, duration (utterances that passed)
   audio_log.csv
       trim / level / exclusion record of every utterance
-Usage: python src/step1_audio.py
+Usage: python src/process_audio.py
 """
 
 import copy

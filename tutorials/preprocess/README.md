@@ -4,9 +4,9 @@ Run, step by step, the process that turns example speech samples into TTS traini
 
 | Step | Content | Document | Run |
 |---|---|---|---|
-| 1 | Audio preprocessing: DC removal (HPF), leading/trailing silence removal (VAD), level normalization (P.56) | [01_audio_preprocessing.md](docs/01_audio_preprocessing.md) | `python src/step1_audio.py` |
-| 2 | Text processing: text normalization (TN), pronunciation lexicon, OOV | [02_text_processing.md](docs/02_text_processing.md) | `python src/step2_text.py` |
-| 3 | Forced alignment: MFA, TextGrid | [03_alignment.md](docs/03_alignment.md) | `bash src/step3_align.sh` |
+| 1 | Audio preprocessing: DC removal (HPF), leading/trailing silence removal (VAD), level normalization (P.56) | [01_audio_preprocessing.md](docs/01_audio_preprocessing.md) | `python src/process_audio.py` |
+| 2 | Text processing: text normalization (TN), pronunciation lexicon, OOV | [02_text_processing.md](docs/02_text_processing.md) | `python src/process_text.py` |
+| 3 | Forced alignment: MFA, TextGrid | [03_alignment.md](docs/03_alignment.md) | `bash src/align.sh` |
 
 ## Data
 
@@ -94,9 +94,9 @@ bash run.sh 4 4      # figures only
 One script at a time:
 
 ```bash
-python src/step1_audio.py        # 1. audio preprocessing
-python src/step2_text.py         # 2. text processing
-bash src/step3_align.sh          # 3. forced alignment (MFA)
+python src/process_audio.py      # 1. audio preprocessing
+python src/process_text.py       # 2. text processing
+bash src/align.sh                # 3. forced alignment (MFA)
 python src/show_alignment.py     #    alignment as a table
 python src/plot_audio.py         # figures: waveform and mel after each audio step, VAD probability
 python src/plot_alignment.py     # figures: word and phone intervals over the waveform and mel
@@ -149,10 +149,12 @@ Only needed if you change the code: see "Code style" in the [course README](../.
 ├── run.sh               run everything
 ├── docs/                tutorial documents 01-03, figures/
 ├── src/
-│   ├── tutorial_lib.py  shared functions (resampling, HPF, VAD trim, P.56, text cleanup, log-mel)
-│   ├── step1_audio.py, step2_text.py, step3_align.sh      steps
-│   ├── step3_manifest.py                                  writes the alignment into the manifest (called by step3_align.sh)
-│   └── show_alignment.py, plot_audio.py, plot_alignment.py viewing results, figures
+│   ├── tutorial_lib.py     shared functions (resampling, HPF, VAD trim, P.56, text cleanup, log-mel)
+│   ├── process_audio.py    1. audio preprocessing
+│   ├── process_text.py     2. text processing
+│   ├── align.sh            3. forced alignment (MFA)
+│   ├── record_alignment.py writes the alignment into the manifest (called by align.sh)
+│   └── show_alignment.py, plot_audio.py, plot_alignment.py   viewing results, figures
 └── third_party/         external tools fetched by setup.sh
 ../data/                 data shared by all tutorials (raw/: example data, preprocess/: outputs)
 ```

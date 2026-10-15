@@ -211,7 +211,7 @@ Each figure shows, from top to bottom, the waveform, the mel-spectrogram, the wo
 
 Run the commands from the repository folder. See the [README](../README.md) for installation.
 
-- `bash src/step3_align.sh` finds the OOV words, runs G2P and aligns, all in one go. It prints the OOV words with their G2P pronunciations and saves the results to `../data/preprocess/example_dataset_16k/textgrids/`. At the end it fills `textgrid` (the path) and `text_info.phonemes` (the aligned phone sequence, with words separated by `|` and silences as `sil`) in the output manifest.
+- `bash src/align.sh` finds the OOV words, runs G2P and aligns, all in one go. It prints the OOV words with their G2P pronunciations and saves the results to `../data/preprocess/example_dataset_16k/textgrids/`. At the end it fills `textgrid` (the path) and `text_info.phonemes` (the aligned phone sequence, with words separated by `|` and silences as `sil`) in the output manifest.
 - `python src/show_alignment.py` prints each TextGrid as a word/phone table.
 - To change the acoustic or G2P model, edit `mfa.*` in `config.yaml`.
 - To redraw the figures, run `python src/plot_alignment.py` (→ `figures/align_<id>.png`, with "/" in the id replaced by "_").
