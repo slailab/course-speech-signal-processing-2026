@@ -1,0 +1,9 @@
+# Python packages for the tutorial, tested with Python 3.11.
+#
+# Pre-installed on Google Colab: only the major version is fixed, so that Colab
+# keeps its own build (tested version in the comment).
+numpy>=2,<3           # tested: 2.4.6
+matplotlib>=3,<4      # tested: 3.11.2
+# Tutorial-specific: exact versions
+tgt==1.5
+pyyaml==6.0.3
