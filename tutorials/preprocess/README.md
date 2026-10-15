@@ -102,7 +102,7 @@ python src/plot_audio.py         # figures: waveform and mel after each audio st
 python src/plot_alignment.py     # figures: word and phone intervals over the waveform and mel
 ```
 
-Parameters (data paths, sampling rate, filter, VAD, target level, lexicon, MFA models) are set in `config.yaml`.
+Parameters (data paths, sampling rate, filter, VAD, target level, lexicon and extra pronunciations, MFA models) are set in `config.yaml`.
 
 **On Colab:** prefix commands with `!` in a cell (use `%cd` instead of `cd`), and listen to the audio like this:
 

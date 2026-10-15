@@ -249,7 +249,7 @@ Run the commands from the repository folder. See the [README](../README.md) for 
 - `python src/process_text.py` runs steps 0-3. It prints the result of each TN sub-step and the lexicon lookup of each word, and saves `../data/preprocess/example_dataset_16k/audio/<id>.lab` (next to the audio file) and `mfa/lexicon.txt`. It also fills `text_info.normalized_text` in the output manifest.
 - Steps 4-5 are run by `bash src/align.sh` (Tutorial 3), which also fills `text_info.phonemes` in the output manifest.
 - The functions live in `src/tutorial_lib.py` (`load_corpus`, `mfa_safe`, `read_lexicon`).
-- To change the raw text, edit `text_info.text` in the dataset manifest; to change the lexicon, edit `text.lexicon` in `config.yaml`.
+- To change the raw text, edit `text_info.text` in the dataset manifest; to change the lexicon, edit `text.lexicon` in `config.yaml`; to add or fix pronunciations, use `text.lexicon_extra` (Appendix D).
 
 ---
 
@@ -382,3 +382,11 @@ A G2P model that only looks at the spelling cannot handle acronyms or the odd sp
 | Use a different G2P | [`g2p_en`](https://github.com/Kyubyong/g2p) (neural, based on CMUdict, ARPAbet) |
 
 A practical approach is to sort the OOV list by number of occurrences (`mfa/oovs/oov_counts_*.txt`) and check the G2P results from the top. In LJSpeech, 30% of all OOV occurrences came from just 9 words (misess, fbi, prs, fpcc, ussr, ...), so adding only those 9 words to the lexicon made a large difference.
+
+To add words to the lexicon in this tutorial, write them to a text file (`word<TAB>phones` per line, `#` for comments) and set `text.lexicon_extra` in `config.yaml` to its path. `process_text.py` merges the file into the lexicon; a word listed there replaces all of its entries in librispeech-lexicon.
+
+```
+# extra pronunciations
+misess	M IH1 S IH0 Z
+fbi	EH1 F B IY1 AY1
+```

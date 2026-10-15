@@ -23,6 +23,10 @@ audio:
 
 text:
   lexicon: third_party/FastSpeech2/lexicon/librispeech-lexicon.txt   # pronunciation lexicon (ARPAbet)
+  # Optional file of extra pronunciations ("word<TAB>phones" per line, # for comments),
+  # e.g. fixes for OOV words that G2P gets wrong. A word listed there replaces all
+  # of its entries in the lexicon. null = none.
+  lexicon_extra: null
 
 mfa:
   acoustic_model: english_us_arpa        # phone set must match the lexicon

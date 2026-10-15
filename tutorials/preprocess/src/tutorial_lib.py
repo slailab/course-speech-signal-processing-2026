@@ -31,7 +31,9 @@ def load_config(path=ROOT / "config.yaml"):
         cfg = yaml.safe_load(f)
     for key in ("manifest", "work", "third_party"):
         cfg["paths"][key] = (ROOT / cfg["paths"][key]).resolve()
-    cfg["text"]["lexicon"] = (ROOT / cfg["text"]["lexicon"]).resolve()
+    for key in ("lexicon", "lexicon_extra"):
+        if cfg["text"].get(key):  # lexicon_extra is optional
+            cfg["text"][key] = (ROOT / cfg["text"][key]).resolve()
     return cfg
 
 

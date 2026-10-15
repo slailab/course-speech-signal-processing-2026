@@ -32,6 +32,11 @@ def main():
     p = cfg["paths"]
     cl = english_cleaners_module(cfg)
     lexicon = read_lexicon(cfg["text"]["lexicon"])  # {word: [pronunciation, ...]}
+    # Optional extra pronunciations: a word listed there replaces its lexicon entries
+    if cfg["text"].get("lexicon_extra"):
+        extra = read_lexicon(cfg["text"]["lexicon_extra"])
+        lexicon.update(extra)
+        print(f"lexicon_extra: {len(extra)} words from {cfg['text']['lexicon_extra'].name}")
     # The manifest written by step 1: only utterances that passed step 1
     entries = read_manifest(output_manifest(cfg))
     root = audio_root(cfg)
