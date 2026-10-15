@@ -1,0 +1,18 @@
+# Extra pronunciations for LJSpeech: fixes for OOV words that G2P gets wrong.
+# Used by the preprocess tutorial through text.lexicon_extra in its config; merged into
+# librispeech-lexicon before OOV detection. A word listed here replaces all of its
+# lexicon entries.
+# Format: word<TAB>ARPAbet phones (lowercase word, as produced by english_cleaners).
+#
+# english_cleaners turns "Mrs." into "misess", which is not in the lexicon; use "missus".
+misess	M IH1 S IH0 Z
+# Acronyms read letter by letter (letter pronunciations from librispeech-lexicon).
+fbi	EH1 F B IY1 AY1
+fbi's	EH1 F B IY1 AY1 Z
+prs	P IY1 AA1 R EH1 S
+fpcc	EH1 F P IY1 S IY1 S IY1
+ussr	Y UW1 EH1 S EH1 S AA1 R
+wdsu	D AH1 B AH0 L Y UW0 D IY1 EH1 S Y UW1
+mvd	EH1 M V IY1 D IY1
+uv	Y UW1 V IY1
+tv	T IY1 V IY1
